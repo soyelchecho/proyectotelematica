@@ -1,0 +1,29 @@
+{
+  "name": "ForoInteractivo",
+  "version": "0.0.1",
+  "description": "Foro que permite comentar sobre temas",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Sergio Andres Rojas Muñoz (https://programaconchecho.webnode.com.co/)",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.500.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "memorystore": "^1.6.1",
+    "mysql": "^2.17.1",
+    "path": "^0.12.7",
+    "socket.io": "^2.2.0",
+    "sync-mysql": "^3.0.1"
+  },
+  "devDependencies": {}
+}
