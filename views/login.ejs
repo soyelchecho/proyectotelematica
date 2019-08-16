@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link href="../css/loginstyle.css" rel="stylesheet">
+      <link rel="icon" type="image/vnd.microsoft.icon" href="../img/logoForo.ico" sizes="32x32">
+    <title>Sesion | Foro</title>
+      <link href="https://code.jquery.com/jquery-3.3.1.min.js" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="active" id="iniciar"> Iniciar Sesion </h2>
+        <h2 class="inactive underlineHover" id="registrar">Registrarse </h2>
+        <% if (MensajeRegistroEmail.length >0) { %>
+          <div><%= MensajeRegistroEmail %></div>
+        <% } %>
+        <% if (MensajeRegistroUsuario.length >0) { %>
+          <div><%= MensajeRegistroUsuario %></div>
+        <% } %>
+        <div id="contenido">
+          <form action="/login" method="POST">
+            <input type="text" id="usuariol" class="fadeIn first" name="usuario" placeholder="Usuario/correo" style="border-style: solid;border-color: black;">
+            <input type="password" id="contral" class="fadeIn second" name="password" placeholder="contraseña"style="border-style: solid;border-color: black;">
+            <input type="submit" class="fadeIn fourth" value="Ingresar">
+          </form>
+          <div id="formFooter">
+            <a class="underlineHover" href="#">¿Olvidaste la contraseña?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+        $("#registrar").click(function(e){
+          document.getElementById("iniciar").className = "inactive underlineHover";
+          document.getElementById("registrar").className = "active";
+          document.getElementById("contenido").innerHTML = '<form action="/registro" method="POST"><input type="email" name ="email" id="correor" class="fadeIn first" placeholder="Ingrese su correo" style="border-style: solid;border-color: black;"><input type="text" name ="usuario" id="usuario" class="fadeIn first" placeholder="Ingrese su usuario" style="border-style: solid;border-color: black;"><input type="password" name="password" id="contrar" class="fadeIn second"  placeholder="Ingrese su contraseña" style="border-style: solid;border-color: black;"><input type="submit" class="fadeIn fourth" value="Registrarse"></form>';
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function() {
+        $("#iniciar").click(function(e){
+          document.getElementById("iniciar").className = "active";
+          document.getElementById("registrar").className = "inactive underlineHover";
+          document.getElementById("contenido").innerHTML ='<form action="/login" method="POST"><input type="text" id="login" class="fadeIn first" name="usuario" placeholder="usuario/correo" style="border-style: solid;border-color: black;"><input type="password" id="password" class="fadeIn second" name="login" placeholder="contraseña" style="border-style: solid;border-color: black;"><input type="submit" class="fadeIn fourth" value="Log In"></form><div id="formFooter"><a class="underlineHover" href="#">¿Olvidaste la contrasena?</a></div>';
+        });
+      });
+    </script>
+
+  </body>
+</html>

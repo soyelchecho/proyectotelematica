@@ -5,6 +5,9 @@ var ambiente = 'desarrollo'; // Defino que ambiente estoy usando, ambiente = def
 var configuracion = {
   desarrollo: {
     ruta: rutaLocal,
+    mongodb:{
+      Comentarios:'mongodb://localhost/ForoInteractivo'
+    },
     aplicacion: {
       nombre: 'ForoInteractivo'
     },

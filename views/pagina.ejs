@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>ForoInteractivo</title>
+
+
+  <link rel="icon" type="image/vnd.microsoft.icon" href="../img/logoForo.ico" sizes="32x32">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <!-- Theme CSS -->
+
+  <link href="../css/freelancer.min.css" rel="stylesheet">
+  <link href="https://code.jquery.com/jquery-3.3.1.min.js" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  <style>
+  body {font-family: Arial, Helvetica, sans-serif;}
+  /* The Modal (background) */
+  .modal {display: none; position: fixed; z-index: 1; padding-top: 100px;left: 0;top: 0;width: 100%;height: 100%; overflow: auto;background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);}
+  /* Modal Content */
+  .modal-content {background-color: #fefefe;margin: auto;padding: 20px;border: 1px solid #888;width: 80%;}
+  /* The Close Button */
+  .close {color: #aaaaaa;float: right;font-size: 28px;font-weight: bold;}
+  .close:hover,
+  .close:focus {color: #000;text-decoration: none;cursor: pointer;}
+  </style>
+</head>
+
+<body id="page-top">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">ForoInteractivo</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#">Inicio</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Temas</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact" id="usuarioPerfil"><%= usuario.usuario %></a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a src="../img/cabin.png" class="btn btn-outline-light btn-social mx-1"  href="/salir">
+              <image src="../img/cake.png"  class="btn-social "></image>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Masthead -->
+  <header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">
+      <h1 class="masthead-heading text-uppercase mb-0">¡¡Empieza a desahogarte!!</h1>
+      <div class="divider-custom divider-light">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="divider-custom-line"></div>
+      </div>
+      <p class="masthead-subheading font-weight-light mb-0">Habla sobre todo lo que quieras</p>
+      <p class="masthead-subheading font-weight-light mb-0">1000% seguro</p>
+    </div>
+  </header>
+  <!-- SECCION DE TEMAS -->
+  <section class="page-section portfolio" id="portfolio">
+    <div class="container">
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">¡TODOS LOS TEMAS!</h2>
+      <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="divider-custom-line"></div>
+      </div>
+     <div class="row" id="status">
+
+     </div>
+   </div>
+   <!-- ########################## PARTE DE LOS TEMAS ##############################3-->
+   <div class="row" id="temasSeccion">
+
+   </div>
+ </div>
+</section>
+  <!-- Contact Section -->
+  <section class="page-section" id="contact">
+    <div class="container">
+      <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">¡CREA UN TEMA!</h2>
+      <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="divider-custom-line"></div>
+      </div>
+      <div class="divider-custom">
+        <div class="divider-custom-line"></div>
+        <div class="divider-custom-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="divider-custom-line"></div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <form id="registrationForm" name="sentMessage">
+            <div class="control-group" style="border-style: ridge;">
+              <B><h5 style="text-align:center;">Titulo Tema:</h5></B>
+              <input class="form-control" name="tituloTema" id = "tema" type="text" placeholder="Titulo del tema" required="required" data-validation-required-message="Por favor llena el campo">
+              <br>
+            </div>
+            <br>
+            <br>
+            <div class="form-group">
+              <div class="text-center mt-4">
+                <button class="btn btn-primary btn-xl" id="mandar">¡Publicar!</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <B><h4 class="text-uppercase mb-4">EAFIT</h4></B>
+          <p class="lead mb-0">Ingenieria de sistemas
+            <br>2019</p>
+        </div>
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Around the Web</h4>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-linkedin-in"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-dribbble"></i>
+          </a>
+        </div>
+        <div class="col-lg-4">
+          <h4 class="text-uppercase mb-4">Sobre Mi</h4>
+          <p class="lead mb-0">Soy un estudiante de ingeniria de sistemas, en mis tiempos libres hago
+            stream y me encanta la programacion para videojuegos, visita mi pagina web:
+            <br>
+            <a href="http://www.programaconchecho.webnode.com.co/">PaginaWEB</a>.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; ForoInteractivo Eafit 2019</small>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+
+<!-- SCRIPT CREAR UN NUEVO TEMA -->
+<script>
+  $(document).ready(function() {
+    $("#mandar").click(function(e){
+      var x = $("#usuarioPerfil").html(); // obtiene el usuario actual
+      var form = $("#registrationForm");
+      var fn   = $("#tema").val();
+      e.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: "./creartema",
+        dataType: 'json',
+        contentType: "application/json",
+        data: JSON.stringify({ tituloTema: fn,usuario:x}),
+        success:(data) =>{
+          window.location.reload()
+        }},
+      function() {form.submit()});
+    });
+  });
+</script>
+
+<!-- SCRIPT LECTURA DE LOS TEMAS -->
+<script>
+  $(document).ready(function() {
+    var x = $("#usuarioPerfil").html(); // obtiene el usuario actual
+      $.ajax({
+        type: "GET",
+        url: "/temas",
+        dataType: 'json',
+        contentType: "application/json",
+        success:(data)=>{
+          var count = Object.keys(data).length;
+          var scri = '';
+          var html = '';
+          var div = document.getElementById('temasSeccion');
+          for(var i = 0; i < count; i++) {
+            html += '<div class="col-md-6 col-lg-4" id="myBtn' +  data[i]._id+ '"><div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1"><div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100"><div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x">' +  data[i].titulo + '</i></div></div><img class="img-fluid" src="../img/cabin.png" alt=""></div></div><div id="myModal'+ data[i]._id+ '" class="modal"><div class="modal-content"><div class="modal-body text-center"><h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">' +  data[i].titulo+ '</h2><div class="divider-custom"><div class="divider-custom-line"></div></div>';
+            if(data[i].usuario==x){
+              html+='<button class="col-md-6" style="margin:auto;display:block;" id ="borrarT'+data[i]._id+'">BORRAR</button>';
+              scri += '<script>$("#borrarT'+ data[i]._id + '").click(function(e){const requestURL = "./'+ data[i]._id+'";e.preventDefault();$.ajax({type: "DELETE",url: requestURL,success: (data) => {window.location.reload();},});});'+ '</' + 'script>';
+            }
+            html +='<img class="img-fluid rounded mb-5" src="../img/cabin.png" alt=""><div class="container"><div class="row" id ="comentariosModal'+data[i]._id+'"></div></div><div class="row justify-content-center"><div class="col-lg-8 mx-auto"><form id="publicarComentario" name="sentMessage"><div class="control-group" style="border-style: ridge;"><B><h5 style="text-align:center;">¿Que piensas al respecto?</h5></B><textarea name="comentario" class="form-control" id="comentario'+ data[i]._id +'" rows="5" placeholder="Pon aqui todo lo que quieras" required="required" data-validation-required-message="Please enter a message."></textarea></div><div id="success2"></div><div class="form-group"><div class="text-center mt-4"><button class="btn btn-primary btn-xl" id="mandarid'+data[i]._id+'">¡Publicar!</button></div></div></form></div></div><div class="col-lg-8"><button id= "cerrar'+data[i]._id+'"class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>CERRAR</button></div></div></div></div></div>';
+            scri += '<script> var modal = document.getElementById("myModal' + data[i]._id +'");var btn = document.getElementById("myBtn' + data[i]._id + '");var span = document.getElementById("cerrar' + data[i]._id + '"); $("#myBtn' + data[i]._id + '").click(function(e){document.getElementById("myModal'+data[i]._id +'").style.display = "block";}); $("#cerrar' + data[i]._id + '").click(function(e){document.getElementById("myModal' + data[i]._id+'").style.display ="none";});window.onclick = function(event) {if(event.target == document.getElementById("myModal'+data[i]._id +'")){document.getElementById("myModal'+data[i]._id+'").style.display = "none";}}' + '</' + 'script>';
+            scri += '<script>$("#mandarid'+ data[i]._id + '").click(function(e){const requestURL = "./crearComentario";e.preventDefault();$.ajax({type: "POST",url: requestURL,dataType: "json",contentType: "application/json",data: JSON.stringify({ temaid: "' + data[i]._id + '", nombreUsuario:"'+x+'",comentario:$("#comentario' +data[i]._id+'").val()}),success: (data) => {window.location.reload();},});});'+ '</' + 'script>';
+            scri += '<script>$(document).ready(() => {$(\'#myBtn' + data[i]._id + '\').click(() => {var usuario = $("#usuarioPerfil").html(); const requestURL = \'comentarios/' + data[i]._id + '\';$.ajax({url: requestURL,type: \'GET\',dataType : \'json\',success: (data) => {var div = document.getElementById(\'comentariosModal'+ data[i]._id +'\');var count = Object.keys(data).length;var scri =\' \'; var html = \' \';for(var i = 0; i < count; i++) {html += \'<div class="col-lg-7 mx-auto" style="border-style: ridge;border-color: #9b9499;"><img src="../img/circus.png" style="max-width: 20%;height: auto;float: left;margin: 5px 0 5px 5px;"></img><B id ="\' + data[i]._idComentario + \'"><h5 style="text-align:center; max-width: 40%; height: 15px;">\' + data[i].nombreUsuario + \'</h5></B>\'\; if(data[i].nombreUsuario ==usuario){html+= \'<button id="eliminar\'+ data[i]._idComentario + \'" style="float: right; background: #cb4335 ;height: 15px;max-width: 20%;" class="fa fa-times" aria-hidden="true"></button><div id = "replace\' + data[i]._idComentario + \'"></div><button id="editar\'+ data[i]._idComentario + \'" style="float: right; background: #3559cb ; height: 15px;max-width: 20%;" class="fa fa-times" aria-hidden="true"></button>\'\; scri} html+=\'<textarea disabled="disabled" class="form-control" style="max-width: 75%;height: 60px;float: right;background-color:#FFF;border-color: #9b9499;" id="comentario\'+data[i]._idComentario+ \'" rows="2" >\'+ data[i].comentario+\'</textarea></div>\';  if(data[i].nombreUsuario ==usuario){scri += \'<script>\' + \' $(document).ready(() => {$("#eliminar\' + data[i]._idComentario +\'").click(function(e) {var usuario = $("#usuarioPerfil").html(); const requestURL="comentarios/\' + data[i]._idComentario+ \'";e.preventDefault();$.ajax({url: requestURL,type: "DELETE",success: function(result) {window.location.reload();}   }); }) });\'+ \'</\' + \'script>\';    scri += \'<script>\' + \' $(document).ready(() => {$("#editar\' + data[i]._idComentario +\'").click(function(e) {var usuario = $("#usuarioPerfil").html(); document.getElementById("comentario\'+data[i]._idComentario +\'").disabled = false; const idd="replace/\' + data[i]._idComentario+ \'"; var html2 = "<button id =\" + idd + \" >Termine</button>";document.getElementById("replace\' +data[i]._idComentario+\'").innerHTML = html2; }) });\'+ \'</\' + \'script>\';     scri += \'<script>\'+ \' $(document).ready(() => {$("#replace\' + data[i]._idComentario +\'").click(function(e){  var nuevocomentario = $.trim($("#comentario\' + data[i]._idComentario +\'").val()); const requestURL="cambiar/\' + data[i]._idComentario+ \'"; e.preventDefault(); console.log(nuevocomentario);$.ajax({url: requestURL,type: "PATCH",dataType:"json",contentType: "application/json",data: JSON.stringify({ datos: nuevocomentario}),success: (data) => {document.getElementById("comentario\'+data[i]._idComentario +\'").disabled = true; document.getElementById("replace\' + data[i]._idComentario +\'").innerHTML = ""; }       });                  })}); \'    + \'</\' + \'script>\';   } }div.innerHTML = html;\$(scri).appendTo(document.body)\;}});});});'+ '</' + 'script>';
+            }
+          div.innerHTML = html;
+          $(scri).appendTo(document.body);
+        }
+      },
+      function() {
+        form.submit()}
+      );
+  });
+</script>
+
+</body>
+</html>
