@@ -19,8 +19,10 @@ var configuracion = {
     app: {
       name: 'ForoInteractivo'
     },
-    port: process.env.PORT || 3000,
-    db: 'mongodb://mongo-server/ForoInteractivo'
+    mongodb:{
+      Comentarios:'mongodb://mongo-server/ForoInteractivo'
+    },
+    port: process.env.PORT || 3000
   },
   produccion: {
     ruta: rutaLocal,

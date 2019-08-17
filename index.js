@@ -5,6 +5,7 @@ var configuracion = require('./config/configuraciones');
 var fs = require('fs');
 const path = require('path');
 var bcrypt = require('bcrypt');
+var glob = require('glob');
 var multer = require('multer');
 const Mongoose = require("mongoose");
 //const MongooseLogin = require("mongoose");
@@ -14,6 +15,11 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 /*   FIN Declaracion Variables Node */
+
+var models = glob.sync(configuracion.ruta + '/modelos/*.js');
+models.forEach(function (model) {
+  require(model);
+});
 
 var app = express(); //Definicion aplicacion como express
 
