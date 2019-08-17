@@ -22,7 +22,7 @@ var configuracion = {
     mongodb:{
       Comentarios:'mongodb://mongo-server/ForoInteractivo'
     },
-    port: process.env.PORT || 3000
+    puerto: process.env.PORT || 3000
   },
   produccion: {
     ruta: rutaLocal,
