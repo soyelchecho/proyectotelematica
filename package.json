@@ -4,26 +4,41 @@
   "description": "Foro que permite comentar sobre temas",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "NODE_ENV=test mocha --recursive test",
+    "test:coverage": "nyc npm test",
+    "test:unit": "mocha --recursive test/middleware test/models test/routes",
+    "test:integration": "mocha --recursive test/integration"
   },
   "keywords": [],
   "author": "Sergio Andres Rojas Muñoz (https://programaconchecho.webnode.com.co/)",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.500.0",
     "bcrypt": "^3.0.6",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.4",
+    "connect-flash": "^0.1.1",
     "ejs": "^2.6.2",
+    "ejs-mate": "^3.0.0",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "formidable": "^1.2.1",
     "fs": "0.0.1-security",
-    "memorystore": "^1.6.1",
-    "mysql": "^2.17.1",
-    "path": "^0.12.7",
-    "socket.io": "^2.2.0",
-    "sync-mysql": "^3.0.1"
+    "mongo": "^0.1.0",
+    "mongodb": "^2.2.19",
+    "mongoose": "^5.6.9",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "mocha": "^3.0.2",
+    "nyc": "^10.0.0"
+  },
+  "engines": {
+    "node": "7.7.4"
+  }
 }

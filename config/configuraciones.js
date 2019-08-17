@@ -13,6 +13,15 @@ var configuracion = {
     },
     puerto: process.env.PORT || 3000,
   },
+    test: {
+    baseUrl: "/",
+    ruta: rutaLocal,
+    app: {
+      name: 'ForoInteractivo'
+    },
+    port: process.env.PORT || 3000,
+    db: 'mongodb://localhost/ForoInteractivo'
+  },
   produccion: {
     ruta: rutaLocal,
     aplicacion: {
