@@ -25,9 +25,13 @@ var configuracion = {
     puerto: process.env.PORT || 3000
   },
   produccion: {
+    baseUrl: "/",
     ruta: rutaLocal,
-    aplicacion: {
-      nombre: 'ForoInteractivo'
+    app: {
+      name: 'ForoInteractivo'
+    },
+    mongodb:{
+      Comentarios:'mongodb+srv://admin:123@cluster0-mlrw3.mongodb.net/test?retryWrites=true&w=majority'
     },
     puerto: process.env.PORT || 3000
   }
