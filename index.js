@@ -8,13 +8,13 @@ var bcrypt = require('bcrypt');
 var glob = require('glob');
 var multer = require('multer');
 const Mongoose = require("mongoose");
-//const MongooseLogin = require("mongoose");
 const morgan = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
 const flash = require('connect-flash');
 
 /*   FIN Declaracion Variables Node */
+console.log(configuracion);
 
 var models = glob.sync(configuracion.ruta + '/modelos/*.js');
 models.forEach(function (model) {
@@ -43,7 +43,6 @@ app.use((req,res,next)=>{
     app.locals.usuario = req.user;
     next();
 });
-//app.use(express.static(path.join(__dirname, 'public'))); //Permitimos leer el directorio public
 
 app.use('ejs', express.static(__dirname + '/views')); // Permitimos cargar las paginas de vista
 app.use(bodyParser.urlencoded({extended:true})); // Permitimos el transpaso del body cuando hacemos un POST con cosas pesadas
@@ -54,16 +53,15 @@ app.use(multer({dest:__dirname+'/file/uploads/'}).any()); // for parsing multipa
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 app.set('views', [__dirname + '/views']);
-//app.set('json spaces',2);
 app.use(bodyParser.json()); // for parsing application/json
 /*  FINDirectorios y herramientas que usa la aplicacion  */
 
 Mongoose.connect(configuracion.mongodb.Comentarios,{useNewUrlParser:true});
-//MongooseLogin.connect(configuracion.mongodb.Login,{useNewUrlParser:true});
 Mongoose.Promise = global.Promise;
 
 const Tema = require('./modelos/temas');
 const Comentario = require('./modelos/comentarios');
+const Usuario = require('./modelos/usuarios');
 
 function isAuthenticated(req,res,next) {
   if(req.isAuthenticated()){
@@ -88,6 +86,73 @@ app.post('/creartema', isAuthenticated,(req, res) => {
        error: err
      });
     });
+});
+app.post('/filtrarUsuario',isAuthenticated,function(req,res,next){
+  var usuario = req.body.datos;
+  Comentario.find({"nombreUsuario": usuario})
+    .exec()
+    .then(doc =>  {
+      if(doc){
+        res.status(201).json(doc);
+      }else{
+        res.status(404).json({
+          message: 'Error con el usuario, no tiene comentarios'
+        })
+      }
+    }).catch(err => {
+      res.status(500).json({error:err});
+    });
+});
+app.post('/filtrarCorreo',isAuthenticated,function(req,res,next){
+  var usuario = req.body.datos;
+  Usuario.findOne({email:usuario}).then(docs=>{
+    Comentario.find({"nombreUsuario":docs.usuario}).exec()
+    .then(doc =>{
+      if(doc){
+        res.status(201).json(doc);
+      }else{
+        res.status(404).json({
+          message: 'Error con el usuario, no tiene comentarios'
+        })
+      }
+    }).catch(err => {
+      res.status(500).json({error:err});
+    });
+  }).catch(err => {
+    res.status(500).json({error:err});
+  });
+});
+app.post('/filtrarTema',isAuthenticated,function(req,res,next){
+  var tema = req.body.datos;
+  Tema.find({titulo:tema}).then(docs=>{
+    if(docs){
+      var comentariosEncontrados = [];
+      var contador = 0;
+      for(var s = 0; s < Object.keys(docs).length;s++){
+        Comentario.find({"_idTema":docs[s]._id}).exec()
+        .then(doc =>{
+          if(doc){
+            for (var i = 0; i < Object.keys(doc).length; i++) {
+              comentariosEncontrados.push(doc[i]);
+            }
+            contador++;
+            if(contador == Object.keys(docs).length){
+              res.status(201).json(comentariosEncontrados);
+            }
+          }else{
+            res.status(404).json({
+              message: 'Error con el usuario, no tiene comentarios'
+            })
+          }
+        }).catch(err => {
+          res.status(500).json({error:err});
+        });
+      }
+    }
+
+  }).catch(err => {
+    res.status(500).json({error:err});
+  });
 });
 
 app.post('/crearComentario',isAuthenticated, (req, res) => {

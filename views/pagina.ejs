@@ -27,6 +27,21 @@
   .close {color: #aaaaaa;float: right;font-size: 28px;font-weight: bold;}
   .close:hover,
   .close:focus {color: #000;text-decoration: none;cursor: pointer;}
+  #wrapper {
+      overflow: hidden; /* will contain if #first is longer than #second */
+  }
+  ::-webkit-input-placeholder {
+   text-align: center;
+ }
+  #first {
+      width: 80%;
+      float:left; /* add this */
+  }
+  #second {
+      margin-top: 2px;
+      border: 1px solid green;
+      overflow: hidden; /* if you don't want #second to wrap below #first */
+  }
   </style>
 </head>
 
@@ -71,6 +86,7 @@
         </div>
         <div class="divider-custom-line"></div>
       </div>
+
       <p class="masthead-subheading font-weight-light mb-0">Habla sobre todo lo que quieras</p>
       <p class="masthead-subheading font-weight-light mb-0">1000% seguro</p>
     </div>
@@ -86,6 +102,21 @@
         </div>
         <div class="divider-custom-line"></div>
       </div>
+      <form id="filtrar" name="filtrar">
+        <div class="control-group" id="wrapper" >
+          <input class="form-control" name="filtroComentario" id="first" type="text" placeholder="Lo que quieres filtrar" required="required" data-validation-required-message="Por favor llena el campo">
+          <select id="second">class = "tipoFiltrado">
+            <option value="usuarion"selected>Usuario</option>
+            <option value="correo">Correo Electronico</option>
+            <option value="tema">Tema Especifico</option>
+            <option value="Fecha" >Antes de Fecha</option>
+         </select>
+          <div class="text-center mt-4">
+              <button class="btn btn-primary btn-xl" id="mandarFiltrado">¡Filtrar!</button>
+          </div>
+          <br>
+        </div>
+      </form>
      <div class="row" id="status">
 
      </div>
@@ -184,6 +215,59 @@
   </div>
 
 <!-- SCRIPT CREAR UN NUEVO TEMA -->
+<script>
+  $(document).ready(function() {
+    $("#mandarFiltrado").click(function(e){
+      //var form = $("#filtrar");
+      var fn   = $("#first").val();
+      console.log(fn);
+      var seleccion =$( "#second option:selected" ).text();
+      var usuario = $("#usuarioPerfil").html(); // obtiene el usuario actual
+      var urlUsar = '';
+      console.log(seleccion);
+      if(seleccion == "Usuario"){
+        urlUsar = '/filtrarUsuario';
+      } else if (seleccion == "Correo Electronico") {
+        urlUsar = '/filtrarCorreo';
+      }else if (seleccion == "Tema Especifico") {
+        urlUsar = '/filtrarTema';
+      }else if (seleccion == "Antes de Fecha") {
+        urlUsar = '/filtrarFecha';
+      }else{
+        urlUsar = '/filtrarCorreo';
+      }
+      console.log(urlUsar);
+      e.preventDefault();
+      $.ajax({
+        type: "POST",
+        url: urlUsar,
+        dataType: 'json',
+        contentType: "application/json",
+        data: JSON.stringify({datos:fn}),
+        success:(data) =>{
+          var count = Object.keys(data).length;
+          var scri = '';
+          var html = '';
+          var div = document.getElementById('temasSeccion');
+          for(var i = 0; i < count; i++) {
+            html+= '<div class="col-lg-7 mx-auto" style="border-style: ridge;border-color: #9b9499;"><img src="../img/circus.png" style="max-width: 20%;height: auto;float: left;margin: 5px 0 5px 5px;"></img><B id ="' + data[i]._idComentario + '"><h5 style="text-align:center; max-width: 40%; height: 15px;">' + data[i].nombreUsuario + '</h5></B>';
+            if(data[i].nombreUsuario ==usuario){
+              html+= '<button id="eliminar'+ data[i]._idComentario + '" style="float: right; background: #cb4335 ;height: 15px;max-width: 20%;" class="fa fa-times" aria-hidden="true"></button><div id = "replace' + data[i]._idComentario + '"></div><button id="editar'+ data[i]._idComentario + '" style="float: right; background: #3559cb ; height: 15px;max-width: 20%;" class="fa fa-times" aria-hidden="true"></button>';
+              scri += '<script>' + ' $(document).ready(() => {$("#eliminar' + data[i]._idComentario +'").click(function(e) {var usuario = $("#usuarioPerfil").html(); const requestURL="comentarios/' + data[i]._idComentario+ '";e.preventDefault();$.ajax({url: requestURL,type: "DELETE",success: function(result) {window.location.reload();}   }); }) });'+ '</' + 'script>';
+              scri += '<script>' + ' $(document).ready(() => {$("#editar' + data[i]._idComentario +'").click(function(e) {var usuario = $("#usuarioPerfil").html(); document.getElementById("comentario'+data[i]._idComentario +'").disabled = false; const idd="replace/' + data[i]._idComentario+ '"; var html2 = "<button id =\" + idd + \" >Termine</button>";document.getElementById("replace' +data[i]._idComentario+'").innerHTML = html2; }) });'+ '</' + 'script>';
+              scri += '<script>'+ ' $(document).ready(() => {$("#replace' + data[i]._idComentario +'").click(function(e){  var nuevocomentario = $.trim($("#comentario' + data[i]._idComentario +'").val()); const requestURL="cambiar/' + data[i]._idComentario+ '"; e.preventDefault(); console.log(nuevocomentario);$.ajax({url: requestURL,type: "PATCH",dataType:"json",contentType: "application/json",data: JSON.stringify({ datos: nuevocomentario}),success: (data) => {document.getElementById("comentario'+data[i]._idComentario +'").disabled = true; document.getElementById("replace' + data[i]._idComentario +'").innerHTML = ""; } });   })}); '    + '</' + 'script>';
+            }
+            html+='<textarea disabled="disabled" class="form-control" style="max-width: 75%;height: 60px;float: right;background-color:#FFF;border-color: #9b9499;" id="comentario'+data[i]._idComentario+ '" rows="2" >'+ data[i].comentario+'</textarea></div>';
+          }
+          div.innerHTML = html;
+          $(scri).appendTo(document.body);
+        }},
+      function() {
+      });
+    });
+  });
+</script>
+
 <script>
   $(document).ready(function() {
     $("#mandar").click(function(e){
