@@ -1,6 +1,6 @@
 var path = require('path');
 var rutaLocal = path.normalize(__dirname + '/..'); // Me permite encontrar la ruta en la que estoy.
-var ambiente = 'test'; // Defino que ambiente estoy usando, ambiente = default (e):
+var ambiente = 'produccion'; // Defino que ambiente estoy usando, ambiente = default (e):
 
 var configuracion = {
   desarrollo: {
@@ -20,7 +20,7 @@ var configuracion = {
       name: 'ForoInteractivo'
     },
     mongodb:{
-      Comentarios:'mongodb://mongo-server/ForoInteractivo'
+      Comentarios:'mongodb://localhost/ForoInteractivo'
     },
     puerto: process.env.PORT || 3000
   },

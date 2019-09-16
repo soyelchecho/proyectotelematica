@@ -3,6 +3,7 @@ const router = Router();
 const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const client = require('../config/redis-client');
 
 
 const Tema = require('../modelos/temas')
@@ -43,53 +44,84 @@ router.get('/salir',isAuthenticated,(req,res,next)=>{
 
 
 router.get('/temas',isAuthenticated,(req,res,next)=>  {
-  Tema.find().exec().then(docs=>{
-    if(docs.length >= 0){
-      res.status(200).send(docs);
+  client.cliente.get('temas', function (err, reply) {
+    if (err){
+      res.status(404).json({message: 'No se encontro la data'});
+    }else if(reply){
+      res.status(200).send(JSON.parse(reply));
     }else{
-      res.status(404).json({
-        message: 'No se encontro la data'
+      Tema.find().exec().then(docs=>{
+        if(docs.length >= 0){
+            client.cliente.set('temas', JSON.stringify(docs));
+            client.cliente.expire('temas',10);
+          res.status(200).send(docs);
+        }else{
+          res.status(404).json({
+            message: 'No se encontro la data'
+          });
+        }
+      }).catch(err=>{
+        res.status(500).json({
+          error:err
+        });
       });
     }
-  }).catch(err=>{
-    res.status(500).json({
-      error:err
-    });
   });
 });
+
 router.get('/comentarios',isAuthenticated,(req,res,next)=>  {
-  Comentario.find().exec().then(docs=>{
-    if(docs.length >= 0){
-      res.status(200).send(docs);
+    client.cliente.get('comentarios', function (err, reply) {
+    if (err){
+      res.status(404).json({message: 'No se encontro la data'});
+    }else if(reply){
+      res.status(200).send(JSON.parse(reply));
     }else{
-      res.status(404).json({
-        message: 'No se encontro la data'
+      Comentario.find().exec().then(docs=>{
+        if(docs.length >= 0){
+            client.cliente.set('comentarios', JSON.stringify(docs));
+            client.cliente.expire('comentarios',2);
+          res.status(200).send(docs);
+        }else{
+          res.status(404).json({
+            message: 'No se encontro la data'
+          });
+        }
+      }).catch(err=>{
+        console.log(err);
+        res.status(500).json({
+          error:err
+        });
       });
     }
-  }).catch(err=>{
-    console.log(err);
-    res.status(500).json({
-      error:err
-    });
   });
 });
 
 
 router.get('/:temaId',isAuthenticated, (req, res) => {
   const id = req.params.temaId;
-  Tema.findById(id)
-    .exec()
-    .then(doc =>  {
-      if(doc){
-        res.status(201).json(doc);
-      }else{
-        res.status(404).json({
-          message: 'No se puede encontrar el tema'
-        })
-      }
-    }).catch(err => {
-      res.status(500).json({error:err});
-    });
+  llave = 'tema' + id
+    client.cliente.get(llave, function (err, reply) {
+    if (err){
+      res.status(404).json({message: 'No se encontro la data'});
+    }else if(reply){
+      res.status(200).send(JSON.parse(reply));
+    }else{
+    Tema.findById(id)
+      .exec()
+      .then(doc =>  {
+        if(doc){
+            client.cliente.set(llave, JSON.stringify(docs));
+          res.status(200).send(docs);
+        }else{
+          res.status(404).json({
+            message: 'No se puede encontrar el tema'
+          })
+        }
+      }).catch(err => {
+        res.status(500).json({error:err});
+      });
+    }
+  });
 });
 
 
@@ -136,27 +168,33 @@ router.delete("/comentarios/:comentarioId",isAuthenticated,(req,res,next)=>{
   });
 });
 
-
-
+//LISTOOOOOOOOOOOOOO RES
 router.get('/comentarios/:temaId',isAuthenticated,function(req,res,next){
   var temaid = req.params.temaId;
-  Comentario.find({"_idTema": temaid})
-    .exec()
-    .then(doc =>  {
-      if(doc){
-        res.status(201).json(doc);
-      }else{
-        res.status(404).json({
-          message: 'No se puede encontrar el tema'
-        })
-      }
-    }).catch(err => {
-      res.status(500).json({error:err});
-    });
+    client.cliente.get(temaid, function (err, reply) {
+    if (err){
+      res.status(404).json({message: 'No se encontro la data'});
+    }else if(reply){
+      res.status(200).send(JSON.parse(reply));
+    }else{
+      Comentario.find({"_idTema": temaid})
+        .exec()
+        .then(docs =>  {
+          if(docs){
+              client.cliente.set(temaid, JSON.stringify(docs));
+              client.cliente.expire(temaid,10);
+            res.status(200).send(docs);
+          }else{
+            res.status(404).json({
+              message: 'No se puede encontrar el tema'
+            })
+          }
+        }).catch(err => {
+          res.status(500).json({error:err});
+        });
+    }
+  });
 });
-
-
-
 
 
 

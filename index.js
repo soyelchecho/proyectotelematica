@@ -11,10 +11,15 @@ const Mongoose = require("mongoose");
 const morgan = require('morgan');
 const passport = require('passport');
 const session = require('express-session');
+//var redis = require('redis');
+//var client = redis.createClient();
+const client = require('./config/redis-client');
 const flash = require('connect-flash');
 
-/*   FIN Declaracion Variables Node */
-console.log(configuracion);
+const cacheSizeBit = 68500000 * 30;
+
+//let client = redis.createClient()
+
 
 var models = glob.sync(configuracion.ruta + '/modelos/*.js');
 models.forEach(function (model) {
@@ -29,10 +34,13 @@ require('./passport/local');
 app.use(morgan('dev'));
 
 app.use(session({
+  //store: new RedisStore({ client }),
   secret: '*secreto*',
+//  cookie: { secure: true }
   resave: false,
   saveUninitialized: false
 }));
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -47,7 +55,9 @@ app.use((req,res,next)=>{
 app.use('ejs', express.static(__dirname + '/views')); // Permitimos cargar las paginas de vista
 app.use(bodyParser.urlencoded({extended:true})); // Permitimos el transpaso del body cuando hacemos un POST con cosas pesadas
 app.use('/css',express.static('css'));
-app.use('/img',express.static('img'));
+app.use('/img',express.static(path.join(__dirname, '/img'),{
+  maxAge: cacheSizeBit
+}));
 app.use(require('./rutas/index.js'));
 app.use(multer({dest:__dirname+'/file/uploads/'}).any()); // for parsing multipart/form-data
 app.engine('html', require('ejs').renderFile);

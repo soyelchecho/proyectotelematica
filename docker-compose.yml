@@ -1,5 +1,15 @@
 version: "2"
 services:
+  redis:
+    container_name: cache
+    image: redis
+    expose:
+      - 6379
+  app:
+    links:
+      - redis
+    environment:
+      - REDIS_URL=redis://cache
   nginx:
     container_name: nginx-server
     image: nginx
