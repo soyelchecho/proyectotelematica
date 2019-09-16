@@ -1,9 +1,4 @@
 version: "2"
-app:
-  links:
-    - redis
-  environment:
-    - REDIS_URL=redis://cache
 services:
   app:
     image: lagden/cep_consulta:5.0.0
