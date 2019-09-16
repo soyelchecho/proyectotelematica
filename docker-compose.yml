@@ -1,7 +1,7 @@
 version: "2"
 services:
   app:
-    image: lagden/cep_consulta:5.0.0
+    image: proyectotelematica
     command: ["node", "index.js"]
     environment:
       - NODE_ENV=production
