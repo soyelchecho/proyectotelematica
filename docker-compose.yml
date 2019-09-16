@@ -39,7 +39,6 @@ services:
       - "6379:6379"
     command: ["redis-server", "--appendonly", "yes"]
     hostname: redis
-    network_mode: host
     networks:
       - redis-net
     volumes:
