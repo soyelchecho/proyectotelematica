@@ -1,17 +1,5 @@
 version: "2"
 services:
-  app:
-    image: lagden/cep_consulta:5.0.0
-    command: ["node", "index.js"]
-    environment:
-      - NODE_ENV=production
-      - RHOST=redis
-    ports:
-      - 1235:3000
-    networks:
-      - redis-net
-    depends_on:
-      - redis
   redis:
     image: redis:4.0.5-alpine
     command: ["redis-server", "--appendonly", "yes"]
@@ -35,10 +23,17 @@ services:
     container_name: nodeapp
     restart: always
     build: .
+    command: ["node", "index.js"]
+    environment:
+      - NODE_ENV=production
+      - RHOST=redis
     ports:
       - "3000:3000"
+    networks:
+      - redis-net
     depends_on:
       - mongo-server
+      - redis
   mongo-server:
     container_name: mongo-server
     image: mongo
