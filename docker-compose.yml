@@ -5,11 +5,26 @@ app:
   environment:
     - REDIS_URL=redis://cache
 services:
+  app:
+    image: lagden/cep_consulta:5.0.0
+    command: ["node", "index.js"]
+    environment:
+      - NODE_ENV=production
+      - RHOST=redis
+    ports:
+      - 1235:3000
+    networks:
+      - redis-net
+    depends_on:
+      - redis
   redis:
-    container_name: cache
-    image: redis
-    expose:
-      - 6379
+    image: redis:4.0.5-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    networks:
+      - redis-net
+    volumes:
+      - redis-data:/data
   nginx:
     container_name: nginx-server
     image: nginx
@@ -36,3 +51,8 @@ services:
       - ./data:/data/db
     ports:
       - "27017:27017"
+networks:
+  redis-net:
+
+volumes:
+  redis-data:
