@@ -25,7 +25,7 @@ services:
       - redis-net
     depends_on:
       - mongo-server
-      - redis
+      - redis-server
   mongo-server:
     container_name: mongo-server
     image: mongo
