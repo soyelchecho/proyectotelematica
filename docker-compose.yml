@@ -15,17 +15,10 @@ services:
     container_name: nodeapp
     restart: always
     build: .
-    command: ["node", "index.js"]
-    environment:
-      - NODE_ENV=production
-      - RHOST=redis
     ports:
       - "3000:3000"
-    networks:
-      - redis-net
     depends_on:
       - mongo-server
-      - redis-server
   mongo-server:
     container_name: mongo-server
     image: mongo
