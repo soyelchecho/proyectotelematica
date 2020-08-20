@@ -14,7 +14,7 @@
   "author": "Sergio Andres Rojas Muñoz (https://programaconchecho.webnode.com.co/)",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
